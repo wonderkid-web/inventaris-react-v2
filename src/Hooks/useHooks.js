@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState, createContext } from 'react'
 import {db} from '../Config/firebaseConfig'
 import { getDocs, collection, onSnapshot } from 'firebase/firestore'
 
@@ -16,3 +16,6 @@ export const useFetch = (coll) =>{
 	return { data }
 }
 
+export const LoginContext = createContext({})
+
+export const RolesContext = createContext({})

@@ -16,7 +16,7 @@ const columns = [
 ];
 
 
-export const DataTable = () => {
+export const Table = () => {
   const { data: row } = useFetch('stokBarang')
 
   return (
