@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react'
 import { Typography, Button, TextField } from '@mui/material'
-import { BroweserRouter as router, Navigate }  from 'react-router-dom'
+import { BroweserRouter as router, Navigate, Link } from 'react-router-dom'
+import { Routes, Route } from 'react-router'
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -20,18 +21,20 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton';
+// ICONS
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
-import { Link } from "react-router-dom";
-import { Routes, Route } from 'react-router'
+import FolderSharedOutlinedIcon from '@mui/icons-material/FolderSharedOutlined';
+import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
 // Routes
 import {Dashboard} from '../Components/Dashboard'
 import {Product} from '../Components/Product'
 import {Kategori} from '../Components/Kategori'
 import {Atk} from '../Components/Atk'
 import {Elektronik} from '../Components/Elektronik'
-import {Login} from '../Components/Login'
+import { Akun } from '../Components/Akun'
+import { TambahAkun } from '../Components/TambahAkun'
 // Context
 
 import {LoginContext, RolesContext} from '../Hooks/useHooks'
@@ -177,7 +180,7 @@ export const MiniDrawer = () => {
           } 
           <Divider />
           <List>
-            <Link to="List%20Produk" key="Product List" style={{textDecoration: 'none', color: 'grey'}}>
+            <Link to="List-Produk" key="Product List" style={{ textDecoration: 'none', color: 'grey' }}>
               <ListItem disablePadding sx={{ display: 'block' }}>
                 <ListItemButton
                   sx={{
@@ -227,22 +230,81 @@ export const MiniDrawer = () => {
             }
           </List>
           <Divider />
+          {role === 'admin' ?
+            <List>
+              <Link to="akun" key="Pengelola Akun" style={{ textDecoration: 'none', color: 'grey' }}>
+                <ListItem disablePadding sx={{ display: 'block' }}>
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? 'initial' : 'center',
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : 'auto',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <FolderSharedOutlinedIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Pengelola Akun" sx={{ opacity: open ? 1 : 0 }} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            </List>
+            :
+            <span></span>
+          }
+          {role === 'admin' ?
+            <List>
+              <Link to="tambah-akun" key="Tambah akun" style={{ textDecoration: 'none', color: 'grey' }}>
+                <ListItem disablePadding sx={{ display: 'block' }}>
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? 'initial' : 'center',
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : 'auto',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <GroupAddOutlinedIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Tambah akun" sx={{ opacity: open ? 1 : 0 }} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            </List>
+            :
+            <span></span>
+          }
         </Drawer>
          <Box sx={{
               marginTop: 5,
               width: '100vw',
               height: '93.5vh',
-              background: 'tomato',
+          background: '#eee',
               padding: 1,
               overflow: 'auto'
             }}>
               <Routes>
                   <Route path="Dashboard" element={<Dashboard />} />
-                  <Route path="/List%20Produk" element={<Product />} />
+            <Route path="/List-Produk" element={<Product />} />
                   <Route path="/Kategori" element={<Kategori />}>
                     <Route path="Atk" element={<Atk />}/>
                     <Route path="Elektronik" element={<Elektronik />}/>
                   </Route>
+            <Route path="/Akun" element={<Akun />} />
+            <Route path="/Tambah-akun" element={<TambahAkun />} />
+
                </Routes>       
               {/*{logged ? <h1>Kamu sudah login!</h1> : <h1>Kamu belum login!</h1>}*/}
             </Box>

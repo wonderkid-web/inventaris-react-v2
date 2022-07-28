@@ -33,7 +33,7 @@ export const Table = () => {
   );
 }
 
-export const Form = () =>{
+export const DataGrid = () => {
    const [inputs, setInputs] = useState({
     namaBarang: "",
     jumlahBarang: ""

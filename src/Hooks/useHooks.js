@@ -19,3 +19,5 @@ export const useFetch = (coll) =>{
 export const LoginContext = createContext({})
 
 export const RolesContext = createContext({})
+
+export const DeleteContext = createContext({})

@@ -1,9 +1,9 @@
+import { Paper } from '@mui/material'
 
 export const Product = () =>{
 	return(
 		<>
-			<h1>SEKARANG KALIAN INI LAGI DI Product </h1>
-						
+			<h1>Produk</h1>
 		</>
 	)
 }
