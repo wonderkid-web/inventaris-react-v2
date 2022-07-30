@@ -35,6 +35,7 @@ import {Atk} from '../Components/Atk'
 import {Elektronik} from '../Components/Elektronik'
 import { Akun } from '../Components/Akun'
 import { TambahAkun } from '../Components/TambahAkun'
+import { Detail } from '../Components/Detail'
 // Context
 
 import {LoginContext, RolesContext} from '../Hooks/useHooks'
@@ -297,7 +298,9 @@ export const MiniDrawer = () => {
             }}>
               <Routes>
                   <Route path="Dashboard" element={<Dashboard />} />
-            <Route path="/List-Produk" element={<Product />} />
+            <Route path="/List-Produk" element={<Product />}>
+              <Route path=":namaBarang" element={<Detail />} />
+            </Route>
                   <Route path="/Kategori" element={<Kategori />}>
                     <Route path="Atk" element={<Atk />}/>
                     <Route path="Elektronik" element={<Elektronik />}/>
