@@ -1,7 +1,8 @@
 import { useState, useContext } from 'react'
-import { Typography, Button, TextField } from '@mui/material'
+import { Typography } from '@mui/material'
 import { BroweserRouter as router, Navigate, Link } from 'react-router-dom'
 import { Routes, Route } from 'react-router'
+import {Button} from '@mui/material'
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -29,12 +30,13 @@ import FolderSharedOutlinedIcon from '@mui/icons-material/FolderSharedOutlined';
 import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
 // Routes
 import {Dashboard} from '../Components/Dashboard'
-import {Product} from '../Components/Product'
+import { ListProduct } from '../Components/ListProduct'
 import {Kategori} from '../Components/Kategori'
 import {Atk} from '../Components/Atk'
 import {Elektronik} from '../Components/Elektronik'
 import { Akun } from '../Components/Akun'
 import { TambahAkun } from '../Components/TambahAkun'
+import { Product } from '../Components/Product'
 // Context
 
 import {LoginContext, RolesContext} from '../Hooks/useHooks'
@@ -141,6 +143,17 @@ export const MiniDrawer = () => {
             <Typography variant="h6" noWrap component="div">
              Dashboard Inventaris PTPN IV
             </Typography>
+            <Button sx={{position: 'absolute',left: '90%', cursor: 'pointer', color: 'white', border: '1px solid white', fontWeight: 'bold'}} 
+              onClick={()=>{
+                  setRole(false)
+                  window.location = '/login'
+                }}
+            variant="outlined" >
+             {/*<Typography 
+                
+              > */}
+              Logout
+            </Button>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -296,8 +309,10 @@ export const MiniDrawer = () => {
               overflow: 'auto'
             }}>
               <Routes>
-                  <Route path="Dashboard" element={<Dashboard />} />
-            <Route path="/List-Produk" element={<Product />} />
+                  <Route path="*" element={<Dashboard />} />
+            <Route path="/List-Produk" element={<ListProduct />}>
+                <Route path=":namaBarang" element={<Product />} />
+            </Route>
                   <Route path="/Kategori" element={<Kategori />}>
                     <Route path="Atk" element={<Atk />}/>
                     <Route path="Elektronik" element={<Elektronik />}/>
@@ -305,7 +320,7 @@ export const MiniDrawer = () => {
             <Route path="/Akun" element={<Akun />} />
             <Route path="/Tambah-akun" element={<TambahAkun />} />
 
-               </Routes>       
+          </Routes>       
               {/*{logged ? <h1>Kamu sudah login!</h1> : <h1>Kamu belum login!</h1>}*/}
             </Box>
         </Box>

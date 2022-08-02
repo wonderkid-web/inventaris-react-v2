@@ -3,59 +3,45 @@ import { Paper, Button, Typography, Alert } from '@mui/material'
 import { useFetch } from '../Hooks/useHooks'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { collection, deleteDoc, doc, addDoc } from 'firebase/firestore'
-import { db } from '../Config/firebaseConfig'
+import { Link } from 'react-router-dom'
+import { Delete } from './Button'
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 210 },
     { field: 'username', headerName: 'Username', width: 130 },
     { field: 'password', headerName: 'Password', width: 130 },
-    {
-        field: 'role',
-        headerName: 'Role akun',
-        width: 90,
-    },
+    { field: 'role', headerName: 'Role akun', width: 90, }
 
 ];
 
-const addAkun = () => {
-    const colRef = collection(db, 'akun')
-    addDoc(colRef, {
-        username: 'wahyu',
-        password: 'wahyu',
-        role: 'member'
-    })
-}
-// addAkun()
 
-const Delete = ({ row }) => {
 
+export const DetailLink = ({ row }) => {
 
     return (
         <Button variant="outlined" startIcon={<DeleteOutlineOutlinedIcon />}
             sx={{ margin: 2 }}
-            onClick={() => {
-                const docRef = doc(db, 'akun', row[0].id)
-                deleteDoc(docRef)
-            }}
+        // onClick={() => {
+
+        // }}
         >
-            Hapus
+            <Link to={`/list-produk/${row}`}>Detail Product</Link>
         </Button>
     )
 }
 
-function DataTable() {
+export function DataTable({ columns, rows, hapus, link }) {
     const [deleteIcon, setDeleteIcon] = useState(false)
+    const [buttonLink, setButtonLink] = useState(false)
     const [selectedRow, setSelectedRow] = useState({})
     const [close, setClose] = useState(false)
-    const { data: rows } = useFetch('akun')
     return (
 
         <div style={{ height: 400, width: '100%' }}>
 
             <DataGrid
-                rows={rows}
                 columns={columns}
+                rows={rows}
                 pageSize={5}
                 rowsPerPageOptions={[5]}
                 components={{
@@ -64,18 +50,22 @@ function DataTable() {
                 checkboxSelection
                 onSelectionModelChange={id => {
                     setDeleteIcon(!deleteIcon)
+                    setButtonLink(!buttonLink)
                     const selectedId = new Set(id)
                     setSelectedRow(rows.filter(row => selectedId.has(row.id)))
+                    // console.log(JSON.stringify(selectedRow[0].username))
 
                 }}
             />
-            {deleteIcon ? <Delete row={selectedRow} /> : null}
+            {deleteIcon ? <Delete row={selectedRow} coll={hapus} /> : null}
+            {link ? buttonLink ? <DetailLink row={selectedRow[0].namaBarang} /> : null : null}
         </div>
     );
 }
 
 
 export const Akun = () => {
+    const { data: rows } = useFetch('akun')
 
     return (
         <Paper sx={{
@@ -92,7 +82,7 @@ export const Akun = () => {
             <Paper
                 elevation={2}
                 sx={{ width: '50%' }}>
-                <DataTable />
+                <DataTable columns={columns} rows={rows} hapus='akun' />
             </Paper>
         </Paper >
     )
